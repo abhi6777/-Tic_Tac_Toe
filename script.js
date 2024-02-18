@@ -18,6 +18,8 @@ const winConditions = {
 let GameBoard = ["", "", "", "", "", "", "", "", ""];
 
 let players = {
+  player1Name: "",
+  player2Name: "",
   player1: "X",
   player2: "O",
   currentPlayer: "X",
@@ -28,29 +30,36 @@ const initializeGame = () => {
     cell.addEventListener(
       "click",
       () => {
-        if(cell.textContent === "") {
+        if (cell.textContent === "") {
           // update the board with current players symbol
           GameBoard[index] = players.currentPlayer;
           cell.textContent = players.currentPlayer;
 
           // check for winner
           const resultText = winner();
-          if(resultText) {
-            result.textContent = `${resultText} Wins!`;
-            // Disable click on the buttons
-            cells.forEach((cell) => {
-              cell.removeEventListener("click");
-            });
-          } else if (GameBoard.every((cell) => cell !== "")) {
+          if (GameBoard.every((cell) => cell !== "")) {
             // if there is tie
             result.textContent = "It's a tie!";
+            removeClickListeners();
+          } else if (resultText) {
+            result.textContent = `${resultText} Wins!`;
+
+            removeClickListeners();
+            switchPlayer();
           } else {
             // switch player
             switchPlayer();
           }
         }
-      }, {once: true}
+      },
+      { once: true }
     );
+  });
+};
+
+const removeClickListeners = () => {
+  cells.forEach(cell => {
+    cell.removeEventListener("click");
   });
 };
 
@@ -58,7 +67,7 @@ initializeGame();
 
 let switchPlayer = () => {
   players.currentPlayer = players.currentPlayer === "X" ? "O" : "X";
-  result.textContent = `Player ${players.currentPlayer} Turn's`;
+  result.textContent = `Player ${players.currentPlayer === "X" ? players.player1Name : players.player2Name}'s Turn`;
 };
 
 const winner = () => {
@@ -72,7 +81,7 @@ const winner = () => {
       GameBoard[a] === GameBoard[c]
     ) {
       // Return the symbol of the winning player
-      return GameBoard[a];
+      return GameBoard[a]  === "X" ? players.player1Name : players.player2Name;
     }
   }
   // Check if all cells are filled (indicating a tie)
@@ -83,19 +92,22 @@ const winner = () => {
   return null;
 };
 
-restartBtn.addEventListener("click", () => {
-  cells.forEach((cell) => {
-    cell.innerHTML = "";
+let restart = () => {
+  restartBtn.addEventListener("click", () => {
+    cells.forEach((cell) => {
+      cell.innerHTML = "";
+    });
+
+    result.textContent = `Player ${player1Name} Turn!`;
+    // reset the game board
+    GameBoard = ["", "", "", "", "", "", "", "", ""];
+    // Reset currentPlayer to player1
+    players.currentPlayer = players.player1;
+    initializeGame();
   });
+};
 
-  result.textContent = `Player X's Turn!`;
-  // reset the game board 
-  GameBoard = ["", "", "", "", "", "", "", "", ""];
-  // Reset currentPlayer to player1
-  players.currentPlayer = players.player1;
-  initializeGame();
-});
-
+restart();
 
 // Change theme
 let theme = document.querySelector("#theme");
@@ -103,3 +115,27 @@ theme.addEventListener("click", () => {
   document.body.classList.toggle("blackTheme");
   document.body.classList.toggle("whiteTheme");
 });
+
+// input section
+const inputSubmit = document.querySelector("#input input[type='submit']"); // Target the submit button
+
+let player1Name, player2Name;
+
+const input = () => {
+  inputSubmit.addEventListener("click", (event) => {
+    event.preventDefault();
+    player1Name = document.querySelector("#player1").value;
+    player2Name = document.querySelector("#player2").value;
+    setPlayerNames(player1Name, player2Name);
+  });
+};
+
+input();
+
+// Add a function to set player names
+const setPlayerNames = (name1, name2) => {
+  players.player1Name = name1;
+  players.player2Name = name2;
+  // Update initial result text with player names
+  result.textContent = `Player ${players.player1Name}'s Turn`;
+};

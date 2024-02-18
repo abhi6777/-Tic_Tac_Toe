@@ -43,3 +43,29 @@
   background-color: white;
   color: black;
 }
+
+/* // input section */
+
+#input {
+  display: grid;
+  grid-auto-flow: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 1rem;
+  margin-bottom: 3rem;
+}
+
+#input input {
+  width: 200px;
+  background-color: rgb(112, 105, 105);
+  border-radius: 0.6rem;
+  padding: 2px;
+}
+
+#input input[type="submit"] {
+  width: 100px;
+  background-color: chartreuse;
+  font-size: 15px;
+  font-weight: bolder;
+}
