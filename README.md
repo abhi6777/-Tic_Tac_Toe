@@ -33,4 +33,4 @@ To play the game, simply open the `index.html` file in a web browser.
 - `script.js`: JavaScript file containing the game logic and functionality.
 
 ## Credits
-This project was created by [Abhimanyu Mahto].
+This project was created by [Abhimanyu Mahto](https://twitter.com/Abhimanyu_codes).
