@@ -18,8 +18,8 @@ const winConditions = {
 let GameBoard = ["", "", "", "", "", "", "", "", ""];
 
 let players = {
-  player1Name: "",
-  player2Name: "",
+  player1Name: "X",
+  player2Name: "O",
   player1: "X",
   player2: "O",
   currentPlayer: "X",

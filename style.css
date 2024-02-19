@@ -58,7 +58,10 @@
 
 #input input {
   width: 200px;
-  background-color: rgb(112, 105, 105);
+  background-color: rgb(167, 124, 124);
+  color: aliceblue;
+  font-weight: bolder;
+  /* font-size: medium; */
   border-radius: 0.6rem;
   padding: 2px;
 }
